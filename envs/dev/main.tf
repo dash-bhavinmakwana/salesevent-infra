@@ -1,38 +1,56 @@
-# 1. Create the Resource Group
+# Resource Group
 resource "azurerm_resource_group" "main" {
-  name     = "rg-salesevent-dev"
+  name     = "rg-${var.project_name}-${var.env}"
   location = var.location
+  tags     = local.common_tags
 }
 
-# 2. Networking Module
+# Networking — VNet + Subnets
 module "networking" {
-  source   = "../../modules/networking"
-  rg_name  = azurerm_resource_group.main.name
-  location = azurerm_resource_group.main.location
-  env      = var.env
+  source       = "../../modules/networking"
+  project_name = var.project_name
+  env          = var.env
+  rg_name      = azurerm_resource_group.main.name
+  location     = azurerm_resource_group.main.location
+  vnet_cidr    = "10.0.0.0/16"
+  tags         = local.common_tags
 }
 
-# 3. Two Flutter Static Apps (Free Tier)
+# Flutter Static Web Apps (x2) — FREE TIER
 module "flutter_apps" {
-  for_each = toset(["flutter-app-one", "flutter-app-two"])
+  for_each = toset(var.flutter_app_names)
   source   = "../../modules/static_app"
   app_name = each.key
+  env      = var.env
   rg_name  = azurerm_resource_group.main.name
   location = azurerm_resource_group.main.location
+  tags     = local.common_tags
 }
 
-# 4. One Web App (F1 Free Tier)
+# Web App (x1) — F1 FREE TIER
 module "web_app" {
   source   = "../../modules/web_app"
-  app_name = "sales-web-portal"
+  app_name = "${var.project_name}-web"
+  env      = var.env
   rg_name  = azurerm_resource_group.main.name
   location = azurerm_resource_group.main.location
+  tags     = local.common_tags
 }
 
-# 5. Storage Account
+# Storage Account — Standard LRS (lowest cost)
 module "storage" {
   source   = "../../modules/storage"
-  st_name  = "stsaleseventdev001"
+  st_name  = "st${var.project_name}${var.env}001"
   rg_name  = azurerm_resource_group.main.name
   location = azurerm_resource_group.main.location
+  tags     = local.common_tags
+}
+
+# Local values
+locals {
+  common_tags = {
+    environment = var.env
+    project     = var.project_name
+    managed_by  = "terraform"
+  }
 }
