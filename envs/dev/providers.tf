@@ -1,20 +1,26 @@
 terraform {
   required_version = ">= 1.5.0"
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
   }
-  # Optional: Uncomment this once you have a storage account for state
+
+  # Uncomment and fill in after creating the state storage account
   # backend "azurerm" {
-  #   resource_group_name  = "tf-state-rg"
-  #   storage_account_name = "tfstateshared"
+  #   resource_group_name  = "rg-tfstate"
+  #   storage_account_name = "stmyprojecttfstate"
   #   container_name       = "tfstate"
   #   key                  = "dev.terraform.tfstate"
   # }
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
