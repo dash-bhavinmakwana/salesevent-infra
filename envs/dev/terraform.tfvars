@@ -1,3 +1,4 @@
+project_name      = "myproject"
 env               = "dev"
 location          = "East US"
-flutter_app_names = ["salesapp", "salesweb"]
+flutter_app_names = ["customer-portal", "admin-dashboard"]
