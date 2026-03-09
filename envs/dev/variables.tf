@@ -22,3 +22,8 @@ variable "web_app_name" {
   type        = string
   description = "Name of the main web app"
 }
+
+variable "resource_group_name" {
+  type        = string
+  description = "Name of the existing resource group"
+}

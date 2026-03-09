@@ -1,4 +1,4 @@
-project_name      = "SalesEvent"
+project_name      = "salesevent"
 env               = "dev"
 location          = "East US"
 flutter_app_names = ["saleseventweb", "saleseventapp"]  # Flutter x2

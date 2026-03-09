@@ -1,5 +1,5 @@
 output "default_hostname" {
-  value       = azurerm_static_web_app.this.default_hostname
+  value       = azurerm_static_web_app.this.default_host_name
   description = "The default hostname of the Static Web App"
 }
 
