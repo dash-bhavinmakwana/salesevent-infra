@@ -30,7 +30,7 @@ module "flutter_apps" {
 # Web App (x1) — F1 FREE TIER
 module "web_app" {
   source   = "../../modules/web_app"
-  app_name = "${var.project_name}-web"
+  app_name = var.web_app_name
   env      = var.env
   rg_name  = azurerm_resource_group.main.name
   location = azurerm_resource_group.main.location
