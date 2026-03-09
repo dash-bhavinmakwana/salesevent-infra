@@ -17,3 +17,8 @@ variable "flutter_app_names" {
   type        = list(string)
   description = "List of names for Flutter static web apps"
 }
+
+variable "web_app_name" {
+  type        = string
+  description = "Name of the main web app"
+}
