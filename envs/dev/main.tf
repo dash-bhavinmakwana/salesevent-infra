@@ -40,7 +40,7 @@ module "web_app" {
 # Storage Account — Standard LRS (lowest cost)
 module "storage" {
   source   = "../../modules/storage"
-  st_name  = "st${var.project_name}${var.env}001"
+  st_name  = "st${var.project_name}${var.env}"
   rg_name  = azurerm_resource_group.main.name
   location = azurerm_resource_group.main.location
   tags     = local.common_tags
